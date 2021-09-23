@@ -122,5 +122,38 @@ class ManagerTest {
         assertArrayEquals(new Issue[0], manager.searchByTags(jin1, new SortByNumber()));
     }
 
+    // Закрытие существующего Issue
+    @Test
+    void shouldZeroCloseItem() {
+        manager.closeIssueById(4);
+        boolean actual = i4.isClose();
+        assertTrue(actual);
+    }
+
+
+    // Проверка закрытия Issue по несуществующему id
+    @Test
+    void shouldCloseByIdIfIssueWithIndexDoesNotExist() {
+        assertThrows(RuntimeException.class, () -> {
+            manager.closeIssueById(27);
+        });
+    }
+
+    // Проверка открытия Issue по id
+    @Test
+    void shouldOpenByIdIfIssueWithIdExist() {
+        manager.openIssueById(2);
+        boolean actual = i2.isClose();
+        assertFalse(actual);
+    }
+
+    // Проверка открытия Issue по несуществующему id
+    @Test
+    void shouldOpenByIdIfIssueWithIndexDoesNotExist() {
+        assertThrows(RuntimeException.class, () -> {
+            manager.openIssueById(27);
+        });
+    }
+
 
 }
