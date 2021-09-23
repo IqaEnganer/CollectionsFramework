@@ -30,9 +30,9 @@ public class Repository {
         return issues.size();
     }
 
-    /*public boolean remove(Issue issue) {
+    public boolean remove(Issue issue) {
         return issues.remove(issue);
-
+    }
 
     public void saveAll(Collection<? extends Issue> issues) {
         this.issues.addAll(issues);
@@ -40,8 +40,7 @@ public class Repository {
 
     public void removeAll(Collection<? extends Issue> issues) {
         this.issues.removeAll(issues);
-
-    }*/
+    }
 
     public Issue[] findById(int id) {
         Issue[] result = new Issue[1];

@@ -8,16 +8,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.Repository;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.sql.Struct;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ManagerTest {
     Repository repository = new Repository();
     Manager manager = new Manager(repository);
+    Collection<Issue> issues = new ArrayList<>();
+    HashSet<String> jin = new HashSet<>();
+    HashSet<String> jin1 = new HashSet<>();
 
     Issue i1 = new Issue(1, 1, "Danil", "Master", "Sveta", new HashSet<String>(Arrays.asList("set", "Smola")), "Text", 4, false);
     Issue i2 = new Issue(2, 2, "Jin", "Master", "Sveta", new HashSet<String>(Arrays.asList("set", "Smola")), "Text", 6, true);
@@ -30,21 +31,30 @@ class ManagerTest {
 
     @BeforeEach
     void setup() throws Exception {
-        manager.save(i1);
-        manager.save(i2);
-        manager.save(i3);
-        manager.save(i4);
-        manager.save(i5);
-        manager.save(i6);
-        manager.save(i7);
+        issues.add(i1);
+        issues.add(i2);
+        issues.add(i3);
+        issues.add(i4);
+        issues.add(i5);
+        issues.add(i6);
+        issues.add(i7);
+
+        manager.saveAll(issues);
+
         manager.removeById(1);
-        manager.removeByNumber(5);
+        manager.removeByNumber(1);
         manager.openIssueById(2);
         manager.closeIssueById(2);
         manager.closeIssueById(6);
 
+
     }
 
+    // Показывает все добавленные элементы
+    @Test
+    void shouldAllElements() {
+        assertArrayEquals(new Issue[]{i2, i3, i4, i5, i6, i7}, manager.getAll());
+    }
 
     //Поиск по Id
     @Test
@@ -56,8 +66,7 @@ class ManagerTest {
     // Поиск по Assignee (на кого назначено).
     @Test
     void shouldFindAssignee() {
-        assertArrayEquals(new Issue[]{i7, i2, i3}, manager.searchByAssignee("Sveta", new SortByHowManyDaysAgoWasItCreated()));
-
+        assertArrayEquals(new Issue[]{i7, i2, i5, i3}, manager.searchByAssignee("Sveta", new SortByHowManyDaysAgoWasItCreated()));
     }
 
     // Сортировка по Id.
@@ -71,23 +80,46 @@ class ManagerTest {
     // Показывает закрытые Issue.
     @Test
     void shouldFindCloseIssues() {
-        assertArrayEquals(new Issue[]{i2, i6}, manager.searchCloseIssues(new SortByNumber()));
+        assertArrayEquals(new Issue[]{i2, i5, i6}, manager.searchCloseIssues(new SortByNumber()));
     }
 
+    // Показывает удаление всех элементов.
     @Test
     void shouldRemoveAll() {
-        assertArrayEquals(new Issue[]{i2}, manager.getAll());
+        manager.removeAll(issues);
+        assertEquals(0, repository.size());
     }
 
     // Количество элементов
     @Test
-    void shouldFindSizeElements(){
-        assertEquals(5, repository.size());
+    void shouldFindSizeElements() {
+        assertEquals(6, repository.size());
     }
+
+    // Проверка поиска по тегу
     @Test
-    void shouldOpenIssue(){
-        manager.openIssueById(8);
-        assertArrayEquals(new Issue[0], manager.getAll());
+    void shouldFindTags() {
+        jin.add("Smegl");
+        System.out.println(Arrays.stream(manager.searchByTags(jin, new SortById())).count());
+        assertEquals(1, Arrays.stream(manager.searchByTags(jin, new SortById())).count());
+        assertArrayEquals(new Issue[]{i5}, manager.searchByTags(jin, new SortByHowManyDaysAgoWasItCreated()));
+    }
+
+    // Поиск по двум тегам
+    @Test
+    void shouldFindCountTags() {
+        jin.add("Sumr");
+        jin.add("Kill");
+        assertEquals(2, Arrays.stream(manager.searchByTags(jin, new SortById())).count());
+        assertArrayEquals(new Issue[]{i3, i5}, manager.searchByTags(jin, new SortById()));
+    }
+
+    // Поиск по несуществующему тегу
+    @Test
+    void shouldTagsZeroCount() {
+        jin1.add("Гомер");
+        assertEquals(0, Arrays.stream(manager.searchByTags(jin1, new SortById())).count());
+        assertArrayEquals(new Issue[0], manager.searchByTags(jin1, new SortByNumber()));
     }
 
 

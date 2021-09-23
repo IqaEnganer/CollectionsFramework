@@ -31,6 +31,14 @@ public class Manager {
         repository.removeByNumber(number);
     }
 
+    public void removeAll(Collection<? extends Issue> issues) {
+        repository.removeAll(issues);
+    }
+
+    public void saveAll(Collection<? extends Issue> issues) {
+        repository.saveAll(issues);
+    }
+
     // Поиск по Id
     public Issue[] searchById(int id) {
         return repository.findById(id);
@@ -105,7 +113,7 @@ public class Manager {
     }
 
     // По тегу
-    public Issue[] searchByTags(HashSet<String> searchTags) {
+    public Issue[] searchByTags(HashSet<String> searchTags, Comparator<Issue> comparator) {
         ArrayList<Issue> filteredIssues = new ArrayList<Issue>();
 
         for (Issue issue : repository.getAll()) {
