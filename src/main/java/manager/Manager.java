@@ -9,7 +9,7 @@ import java.util.*;
 public class Manager {
 
 
-    Repository repository;
+    public Repository repository;
 
     public Manager(Repository repository) {
         this.repository = repository;
@@ -49,7 +49,7 @@ public class Manager {
     public Issue[] searchOpenIssues(Comparator<Issue> comparator) {
         Issue[] result = new Issue[0];
         for (Issue issue : repository.getAll()) {
-            if (matches(issue)) {
+            if (matchesOpen(issue)) {
                 Issue[] tmp = new Issue[result.length + 1];
                 System.arraycopy(result, 0, tmp, 0, result.length);
                 tmp[tmp.length - 1] = issue;
@@ -60,8 +60,8 @@ public class Manager {
         return result;
     }
 
-    public boolean matches(Issue issue) {
-        if (issue.isClose() == false) {
+    public boolean matchesOpen(Issue issue) {
+        if (issue.isClose()) {
             return true;
         }
         return false;
@@ -71,7 +71,7 @@ public class Manager {
     public Issue[] searchCloseIssues(Comparator<Issue> comparator) {
         Issue[] result = new Issue[0];
         for (Issue issue : repository.getAll()) {
-            if (matches1(issue)) {
+            if (matchesClose(issue)) {
                 Issue[] tmp = new Issue[result.length + 1];
                 System.arraycopy(result, 0, tmp, 0, result.length);
                 tmp[tmp.length - 1] = issue;
@@ -83,7 +83,7 @@ public class Manager {
     }
 
 
-    public boolean matches1(Issue issue) {
+    public boolean matchesClose(Issue issue) {
         if (issue.isClose() == true) {
             return true;
         }
@@ -94,7 +94,7 @@ public class Manager {
     public Issue[] searchByAssignee(String assignee, Comparator<Issue> comparator) {
         Issue[] result = new Issue[0];
         for (Issue issue : repository.getAll()) {
-            if (matches4(issue, assignee)) {
+            if (matchesAssignee(issue, assignee)) {
                 Issue[] tmp = new Issue[result.length + 1];
                 System.arraycopy(result, 0, tmp, 0, result.length);
                 tmp[tmp.length - 1] = issue;
@@ -105,7 +105,7 @@ public class Manager {
         return result;
     }
 
-    public boolean matches4(Issue issue, String assignee) {
+    public boolean matchesAssignee(Issue issue, String assignee) {
         if (issue.getAssignee().contains(assignee)) {
             return true;
         }
@@ -117,7 +117,7 @@ public class Manager {
         ArrayList<Issue> filteredIssues = new ArrayList<Issue>();
 
         for (Issue issue : repository.getAll()) {
-            HashSet<String> issueTags = issue.getTags();
+            Set<String> issueTags = issue.getTags();
 
             for (String searchTag : searchTags) {
                 if (issueTags.contains(searchTag)) {

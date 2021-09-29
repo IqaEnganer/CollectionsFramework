@@ -11,7 +11,7 @@ public class Issue {
     private String author;
     private String topic;
     private String assignee;
-    private HashSet<String> tags = new HashSet<String>();
+    private Set<String> tags = new HashSet<String>();
     private String text;
     private int howManyDaysAgoWasItCreated;
     private boolean close;

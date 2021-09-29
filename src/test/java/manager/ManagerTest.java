@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.Repository;
 
-import java.sql.Struct;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
