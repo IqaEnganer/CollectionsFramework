@@ -3,7 +3,6 @@ package repository;
 import data.Issue;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Repository {
@@ -33,11 +32,11 @@ public class Repository {
         return issues.remove(issue);
     }
 
-    public void saveAll(Collection<? extends Issue> issues) {
+    public void saveAll(List<? extends Issue> issues) {
         this.issues.addAll(issues);
     }
 
-    public void removeAll(Collection<? extends Issue> issues) {
+    public void removeAll(List<? extends Issue> issues) {
         this.issues.removeAll(issues);
     }
 

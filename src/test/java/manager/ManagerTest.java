@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ManagerTest {
     Repository repository = new Repository();
     Manager manager = new Manager(repository);
-    Collection<Issue> issues = new ArrayList<>();
+    List<Issue> issues = new ArrayList<>();
     HashSet<String> jin = new HashSet<>();
     HashSet<String> jin1 = new HashSet<>();
 
@@ -29,7 +29,7 @@ class ManagerTest {
 
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         issues.add(i1);
         issues.add(i2);
         issues.add(i3);
@@ -72,7 +72,7 @@ class ManagerTest {
     // Показывает открытые Issue.
     @Test
     void shouldFindOpenIssues() {
-        assertArrayEquals(new Issue[]{i3, i4, i7}, manager.searchOpenIssues(new SortById()));
+        assertArrayEquals(new Issue[]{i2, i5, i6}, manager.searchOpenIssues(new SortById()));
     }
 
     // Сортировка по номеру Issue.

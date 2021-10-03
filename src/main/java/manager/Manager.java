@@ -3,7 +3,6 @@ package manager;
 import data.Issue;
 import repository.Repository;
 
-import javax.xml.crypto.dsig.keyinfo.X509IssuerSerial;
 import java.util.*;
 
 public class Manager {
@@ -31,11 +30,11 @@ public class Manager {
         repository.removeByNumber(number);
     }
 
-    public void removeAll(Collection<? extends Issue> issues) {
+    public void removeAll(List<Issue> issues) {
         repository.removeAll(issues);
     }
 
-    public void saveAll(Collection<? extends Issue> issues) {
+    public void saveAll(List<Issue> issues) {
         repository.saveAll(issues);
     }
 
