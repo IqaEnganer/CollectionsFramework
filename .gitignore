@@ -4,6 +4,7 @@ HELP.md
 .gradle
 build/
 target/
+.ReverseCollection.java
 
 ### STS ###
 .apt_generated

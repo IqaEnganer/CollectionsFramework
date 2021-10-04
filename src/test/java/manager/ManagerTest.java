@@ -47,6 +47,7 @@ class ManagerTest {
         manager.closeIssueById(6);
 
 
+
     }
 
     // Показывает все добавленные элементы
@@ -65,7 +66,9 @@ class ManagerTest {
     // Поиск по Assignee (на кого назначено).
     @Test
     void shouldFindAssignee() {
-        assertArrayEquals(new Issue[]{i7, i2, i5, i3}, manager.searchByAssignee("Sveta", new SortByHowManyDaysAgoWasItCreated()));
+        System.out.println(manager.searchByAssignee("Sveta", new SortById()).size());
+        assertEquals(4,manager.searchByAssignee("Sveta",new SortById()).size());
+        assertArrayEquals(new ArrayList[Issue]().to,manager.searchByAssignee("Sveta",new SortById()));
     }
 
     // Сортировка по Id.
@@ -73,6 +76,7 @@ class ManagerTest {
     @Test
     void shouldFindOpenIssues() {
         assertArrayEquals(new Issue[]{i2, i5, i6}, manager.searchOpenIssues(new SortById()));
+        System.out.println(manager.searchOpenIssues(new SortById()).length);
     }
 
     // Сортировка по номеру Issue.

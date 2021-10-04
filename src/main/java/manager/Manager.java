@@ -90,17 +90,13 @@ public class Manager {
     }
 
     // Фильтр по назначенному на Issue
-    public Issue[] searchByAssignee(String assignee, Comparator<Issue> comparator) {
-        Issue[] result = new Issue[0];
+    public List<Issue> searchByAssignee(String assignee, Comparator<Issue> comparator) {
+        List<Issue> result = new ArrayList<>(0);
         for (Issue issue : repository.getAll()) {
             if (matchesAssignee(issue, assignee)) {
-                Issue[] tmp = new Issue[result.length + 1];
-                System.arraycopy(result, 0, tmp, 0, result.length);
-                tmp[tmp.length - 1] = issue;
-                result = tmp;
+                result.add(issue);
             }
         }
-        Arrays.sort(result, comparator);
         return result;
     }
 

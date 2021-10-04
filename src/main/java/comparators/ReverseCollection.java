@@ -10,3 +10,12 @@ import java.util.Comparator;
         return Collection.reverseOrder(this);
     }
 }*/
+
+/*public Issue getById(int id){
+        for (Issue issue:issues){
+        if(issue.getId() == id){
+        return issue;
+        }
+        }
+        return null;
+        }*/
