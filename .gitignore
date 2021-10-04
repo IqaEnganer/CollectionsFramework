@@ -4,7 +4,7 @@ HELP.md
 .gradle
 build/
 target/
-ReverseCollection.java
+/ReverseCollection.java
 
 ### STS ###
 .apt_generated
