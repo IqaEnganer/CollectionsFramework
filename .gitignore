@@ -4,7 +4,7 @@ HELP.md
 .gradle
 build/
 target/
-src/ReverseCollection.java
+.src/main/java/comparators/ReverseCollection.java
 
 ### STS ###
 .apt_generated
