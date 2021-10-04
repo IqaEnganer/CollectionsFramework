@@ -45,39 +45,31 @@ public class Manager {
 
 
     //Фильтр по открытому Issue
-    public Issue[] searchOpenIssues(Comparator<Issue> comparator) {
-        Issue[] result = new Issue[0];
+    public List<Issue> searchOpenIssues(Comparator<Issue> comparator) {
+        List<Issue> result = new ArrayList<>(0);
         for (Issue issue : repository.getAll()) {
             if (matchesOpen(issue)) {
-                Issue[] tmp = new Issue[result.length + 1];
-                System.arraycopy(result, 0, tmp, 0, result.length);
-                tmp[tmp.length - 1] = issue;
-                result = tmp;
+                result.add(issue);
             }
         }
-        Arrays.sort(result, comparator);
         return result;
     }
 
     public boolean matchesOpen(Issue issue) {
         if (issue.isClose()) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     //Фильтр по закрытому Issue
-    public Issue[] searchCloseIssues(Comparator<Issue> comparator) {
-        Issue[] result = new Issue[0];
+    public List<Issue> searchCloseIssues(Comparator<Issue> comparator) {
+        List<Issue> result = new ArrayList<>(0);
         for (Issue issue : repository.getAll()) {
             if (matchesClose(issue)) {
-                Issue[] tmp = new Issue[result.length + 1];
-                System.arraycopy(result, 0, tmp, 0, result.length);
-                tmp[tmp.length - 1] = issue;
-                result = tmp;
+                result.add(issue);
             }
         }
-        Arrays.sort(result, comparator);
         return result;
     }
 

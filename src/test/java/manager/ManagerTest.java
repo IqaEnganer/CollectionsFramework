@@ -10,6 +10,8 @@ import repository.Repository;
 
 import java.util.*;
 
+
+import static org.apache.commons.lang3.ArrayUtils.toArray;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ManagerTest {
@@ -47,7 +49,6 @@ class ManagerTest {
         manager.closeIssueById(6);
 
 
-
     }
 
     // Показывает все добавленные элементы
@@ -66,24 +67,40 @@ class ManagerTest {
     // Поиск по Assignee (на кого назначено).
     @Test
     void shouldFindAssignee() {
+        List<Issue> issuesAssignee = new ArrayList<>();
+        issuesAssignee.add(i2);
+        issuesAssignee.add(i3);
+        issuesAssignee.add(i5);
+        issuesAssignee.add(i7);
         System.out.println(manager.searchByAssignee("Sveta", new SortById()).size());
-        assertEquals(4,manager.searchByAssignee("Sveta",new SortById()).size());
-        assertArrayEquals(new ArrayList[Issue]().to,manager.searchByAssignee("Sveta",new SortById()));
+        assertEquals(issuesAssignee, manager.searchByAssignee("Sveta", new SortById()));
     }
 
     // Сортировка по Id.
     // Показывает открытые Issue.
     @Test
     void shouldFindOpenIssues() {
-        assertArrayEquals(new Issue[]{i2, i5, i6}, manager.searchOpenIssues(new SortById()));
-        System.out.println(manager.searchOpenIssues(new SortById()).length);
+        List<Issue> issuesOpen = new ArrayList<>();
+        issuesOpen.add(i3);
+        issuesOpen.add(i4);
+        issuesOpen.add(i7);
+
+        System.out.println(manager.searchOpenIssues(new SortById()).size());
+        assertEquals(issuesOpen, manager.searchOpenIssues(new SortById()));
+
     }
 
     // Сортировка по номеру Issue.
     // Показывает закрытые Issue.
     @Test
     void shouldFindCloseIssues() {
-        assertArrayEquals(new Issue[]{i2, i5, i6}, manager.searchCloseIssues(new SortByNumber()));
+        List<Issue> issuesClose = new ArrayList<>();
+        issuesClose.add(i2);
+        issuesClose.add(i5);
+        issuesClose.add(i6);
+
+        System.out.println(manager.searchCloseIssues(new SortById()).size());
+        assertEquals(issuesClose, manager.searchCloseIssues(new SortByNumber()));
     }
 
     // Показывает удаление всех элементов.
